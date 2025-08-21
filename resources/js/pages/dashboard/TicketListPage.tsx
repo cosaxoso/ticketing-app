@@ -1,12 +1,25 @@
 import SidebarNav from "@/components/SidebarNav";
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
 import Pagination from "@/components/Pagination";
-import { Link } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
+import {TICKET_STATUS_CLASS_MAP, TICKET_STATUS_TEXT_MAP } from "@/constants";
 
+//view tickets page
+export default function TicketListPage({tickets }){
+  const {sort, direction} = usePage().props; 
 
-export default function TicketListPage({ tickets}){
-  
+  const handleSort = (field) => {
+    const newDirection=sort===field&&direction==='asc' ? 'desc' : 'asc'; 
+
+    router.get('tickets', {
+      sort:field, 
+      direction: newDirection 
+    }, {
+      preserveState: true,
+      replace: true
+    })
+  }
+
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
       <SidebarNav />
@@ -27,15 +40,16 @@ export default function TicketListPage({ tickets}){
           >
             <thead>
               <tr style={{ backgroundColor: "#007bff", color: "white"}}>
-                <th style={thStyle}>Urgency</th>
-                <th style={thStyle}>ID</th>
-                <th style={thStyle}>Subject</th>
-                <th style={thStyle}>Name</th>
-                <th style={thStyle}>Department</th>
-                <th style={thStyle}>Status</th>
-                <th style={thStyle}>Created At</th>
+                <th style={thStyle} onClick={()=>handleSort('urgency')}>Urgency</th>
+                <th style={thStyle} onClick={()=>handleSort('id')}>ID</th>
+                <th style={thStyle} onClick={()=>handleSort('subject')}>Subject</th>
+                <th style={thStyle} onClick={()=>handleSort('name')}>Name</th>
+                <th style={thStyle} onClick={()=>handleSort('department')}>Department</th>
+                <th style={thStyle} onClick={()=>handleSort('status')}>Status</th>
+                <th style={thStyle} onClick={()=>handleSort('created_at')}>Created At</th>
               </tr>
             </thead>
+        
             <tbody>
               {tickets.data.map((ticket)=>
                 <tr key={ticket.id} style={{ textAlign: "left" }}>
@@ -48,11 +62,12 @@ export default function TicketListPage({ tickets}){
                   </th>
                   <td style={tdStyle}>{ticket.name}</td>
                   <td style={tdStyle}>{ticket.department}</td>
-                  <td style={tdStyle}>{ticket.status}</td>
+                  <td style={tdStyle}>
+                    {ticket.status}
+                  </td>
                   <td style={tdStyle}>{new Date(ticket.created_at).toLocaleString()}</td>
                 </tr>
               )}
-
             </tbody>
           </table>
           <Pagination links={tickets.meta.links} />

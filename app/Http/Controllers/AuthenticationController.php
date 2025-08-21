@@ -6,11 +6,11 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class AuthenticationController extends Controller{
-    public function index(){
+    public function login(){
         return Inertia::render('auth/Login');
     }
 
-    public function login(){
+    public function authenticate(){
         //validate
         $attributes = request()-> validate([
             'email'=> ['required', 'email'],
@@ -21,10 +21,10 @@ class AuthenticationController extends Controller{
             throw ValidationException::withMessages(['password'=> 'Wrong credentials']);
         }
         
-        //regenerate the session token
+        // regenerate the session token
         request()-> session()-> regenerate();
 
-        //return to diff page
+        // return to diff page
         return redirect('/dashboard');
     }
 }

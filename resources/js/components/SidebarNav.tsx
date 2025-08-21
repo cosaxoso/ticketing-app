@@ -23,7 +23,7 @@ const SidebarNav: React.FC = () => {
       </h2>
       <NavButton label="Dashboard" path="/dashboard" />
       <NavButton label="View Tickets" path="/tickets" />
-      <NavButton label="Raise a Ticket" path="/ticket-form1" />
+      <NavButton label="Raise a Ticket" path="/ticket-form" />
       <NavButton label="Settings" path="/settings" />
     </div>
   );

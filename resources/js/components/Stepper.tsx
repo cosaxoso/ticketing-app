@@ -6,9 +6,16 @@ import { AnimatePresence, motion, Variants } from 'motion/react';
 import React, { Children, HTMLAttributes, ReactNode, useLayoutEffect, useRef, useState } from 'react';
 
 interface StepperProps extends HTMLAttributes<HTMLDivElement> {
+    //this the pages of the stepper
     children: ReactNode;
+
+    //where we want to start
     initialStep?: number;
+
+    //function that runs when we go to a different step 
     onStepChange?: (step: number) => void;
+
+    //function that runs when all steps are completed 
     onFinalStepCompleted?: () => void;
     stepCircleContainerClassName?: string;
     stepContainerClassName?: string;
@@ -19,6 +26,8 @@ interface StepperProps extends HTMLAttributes<HTMLDivElement> {
     backButtonText?: string;
     nextButtonText?: string;
     disableStepIndicators?: boolean;
+    validateSteps?: (step: number) => boolean;
+    
     renderStepIndicator?: (props: { step: number; currentStep: number; onStepClick: (clicked: number) => void }) => ReactNode;
 }
 
@@ -39,12 +48,22 @@ export default function Stepper({
     renderStepIndicator,
     ...rest
 }: StepperProps) {
+    //keeps track of which step the user is on
     const [currentStep, setCurrentStep] = useState<number>(initialStep);
+    
+    //helps us know if your're going forward or backwards
     const [direction, setDirection] = useState<number>(0);
+
+    //displaying the cirlcles for each of the step and whether we completed it or not
     const stepsArray = Children.toArray(children);
+
     const totalSteps = stepsArray.length;
     const isCompleted = currentStep > totalSteps;
     const isLastStep = currentStep === totalSteps;
+
+    const [inputValue, setInputValue] = useState("");
+
+    const isInputValid = inputValue.trim() !== "";
 
     const updateStep = (newStep: number) => {
         setCurrentStep(newStep);
@@ -55,20 +74,20 @@ export default function Stepper({
         }
     };
 
+    //next three function handles navigation from the current step
     const handleBack = () => {
         if (currentStep > 1) {
             setDirection(-1);
             updateStep(currentStep - 1);
         }
     };
-
     const handleNext = () => {
         if (!isLastStep) {
+            // if (!isInputValid) return; 
             setDirection(1);
             updateStep(currentStep + 1);
         }
     };
-
     const handleComplete = () => {
         setDirection(1);
         updateStep(totalSteps + 1);
@@ -137,8 +156,7 @@ export default function Stepper({
                             <button
                                 onClick={isLastStep ? handleComplete : handleNext}
                                 className="flex items-center justify-center rounded-full bg-green-500 px-3.5 py-1.5 font-medium tracking-tight text-white transition duration-350 hover:bg-green-600 active:bg-green-700"
-                                {...nextButtonProps}
-                            >
+                                {...nextButtonProps}                            >
                                 {isLastStep ? 'Complete' : nextButtonText}
                             </button>
                         </div>

@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\Comment;
+use Inertia\Inertia;
 
 class CommentController extends Controller{
-    public function store(Request $request, Ticket $ticket){
-
+    
+    public function store(Request $request){
         $validated = $request->validate([
             'comment' => ['required','string']
         ]);
@@ -21,7 +22,4 @@ class CommentController extends Controller{
         return redirect('/dashboard');
     }
 
-    public function show(Comment $comment){
-        return view('jobs.show', ['comment' => $comment]);
-    } 
 }

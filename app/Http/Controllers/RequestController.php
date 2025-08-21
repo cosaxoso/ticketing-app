@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use App\Models\Ticket;
+use App\Models\Comment;
 
 class RequestController extends Controller
 {
@@ -31,7 +32,7 @@ class RequestController extends Controller
             'urgency' => 'required|in:High,Medium,Low',
         ]);
 
-        Ticket::create([
+        $ticket = Ticket::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'subject' => $validated['subject'],
@@ -43,9 +44,15 @@ class RequestController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
+        Comment::create([
+            'ticket_id' => $ticket->id, 
+            'comment' => $validated['name'] . ' created a ticket',
+        ]);
+
 
         // Redirect to the home page
-        return redirect('/');
+        // return redirect('/');
+        
     }
 
     

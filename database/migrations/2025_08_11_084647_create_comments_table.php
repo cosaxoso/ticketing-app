@@ -17,7 +17,7 @@ return new class extends Migration
             $table->longText('comment');
             $table->foreignId(column: 'ticket_id')->constrained('ticket')->onDelete('cascade');
             $table->timestamps();
-            $table->foreignId(column:'user_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->nullable();
         });
     }
 

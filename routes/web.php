@@ -15,17 +15,19 @@ Route::post('/ticket-form', [App\Http\Controllers\RequestController::class, 'sto
 
 
 //login page
-Route::get('/login',[AuthenticationController::class, 'index']);
-Route::post('/login', [AuthenticationController::class,'login']);
+Route::get('/login',[AuthenticationController::class, 'login'])->name('login');
+Route::post('/login', [AuthenticationController::class,'authenticate']);
 
 Route::middleware('auth')->group(function(){
     Route::get('/dashboard', fn() => Inertia::render('dashboard/Dashboard'))->name('dashboard');
+
+    Route::resource('/tickets', TicketController::class);
+
+    //shows the list of tickets
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
+
+    //stores the comment
+    Route::post('/tickets/{ticket}/comments',[CommentController::class, 'store']);
 });
 
-Route::resource('/tickets', TicketController::class);
 
-//shows the list of tickets
-Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
-
-//stores the comment
-Route::post('/tickets/{ticket}/comments',[CommentController::class, 'store'] );

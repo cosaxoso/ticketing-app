@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
+// import { usePage } from "@inertiajs/react";
+
 
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +27,9 @@ const LoginForm: React.FC = () => {
   const goBack = () => {
     router.visit("/");
   };
+
+  const { errors } = usePage().props as { errors: Record<string, string> };
+
 
   return (
     <div
@@ -68,6 +73,8 @@ const LoginForm: React.FC = () => {
                 fontSize: "16px",
               }}
             />
+            {errors.email && <div style={{ color: "red", marginTop: "5px" }}>{errors.email}</div>}
+
           </div>
 
           <div style={{ marginBottom: "20px" }}>
@@ -95,6 +102,8 @@ const LoginForm: React.FC = () => {
                 fontSize: "16px",
               }}
             />
+            {errors.password && <div style={{ color: "red", marginTop: "5px" }}>{errors.password}</div>}
+
           </div>
 
           <div

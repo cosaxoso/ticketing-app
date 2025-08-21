@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->unique();
             $table->string('name');
             $table->string('email');
-            $table->string('ip_address')->nullable(); 
+            $table->string('ip_address'); 
 
             $table->enum('urgency', ['High', 'Medium', 'Low']);
             $table->string('subject');
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('department');
             $table->string('assigned_name');
             $table->enum('status', ['Pending', 'In progress', 'Resolved'])->default('Pending');
-            $table->string('image')->nullable();    
+            $table->string('attachment')->nullable();    
             $table->timestamps();
         });
     }

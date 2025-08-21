@@ -4,7 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import React, { useState } from "react";
 
 
-export default function ShowTickets({tickets} ){
+export default function ShowTickets({tickets, comments} ){
 
     const [commentData, setTicketData] = useState({
         comment: '',
@@ -20,7 +20,7 @@ export default function ShowTickets({tickets} ){
         });
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement >) => {
         setTicketData({
             ...commentData,
             [e.target.name]: e.target.value,
@@ -36,7 +36,7 @@ export default function ShowTickets({tickets} ){
                         Ticket # {tickets.id}
                     </h1>
                     <div className="grid gap-1 grid-cols-2 mt-2">
-                        <div>
+                        <div className="gap-4">
                             <div>
                                 <label className="font-bold text-lg">Name</label>
                                 <p className="mt-1">{tickets.name}</p>
@@ -59,6 +59,12 @@ export default function ShowTickets({tickets} ){
                                 <label className="font-bold text-lg">Created At</label>
                                 <p className="mt-1">{tickets.created_at}</p>
                             </div>
+                            <div className="grid grid-col">
+                                <label className="font-bold text-lg">Status</label>
+                                <select className="mt-1 rounded-md border">
+                                    <option value={tickets.status}></option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div className="mt-4">
@@ -73,8 +79,16 @@ export default function ShowTickets({tickets} ){
                     </div>
                 </div>
                 <div>
-                    <h2>{commentData.user_id}</h2>
-                    <p>{commentData.comment}</p>
+                    <h1 style={{fontWeight: "bold", fontSize: "24px", padding: "12px"}}>
+                        Comments
+                    </h1>
+                    {comments.data.map((comment: any) => (
+                        <div class="flex flex-row justify-around m-4">
+                            <p key={comment.id} >{comment.user_id}</p>
+                            <p key={comment.id}>{comment.comment}</p>
+                            <p key={comment.id}>{comment.created_at}</p>
+                        </div>
+                    ))}
                 </div>
                 
                 {/* TO GENERATE THE MODAL DIALOGUE */}

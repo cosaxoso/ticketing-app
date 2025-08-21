@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 
-class TicketResource extends JsonResource
+class CommentResource extends JsonResource
 {
 
     public static $wrap = false;
@@ -18,17 +18,11 @@ class TicketResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id"=> $this->id,
-            "name" => $this->name,
-            "subject"=> $this->subject,
-            "department"=>$this->department,
+            "ticket_id"=>$this->ticket_id, 
+            "comment"=>$this->comment,
+            "user_id" => $this->user_id,
+            "id"=>$this->id, 
             "created_at"=>(new Carbon($this->created_at))->toDateTimeString(),
-            "email"=> $this->email,
-            "ip_address"=> $this->ip_address,
-            "details"=> $this->details,
-            "status"=> $this->status,
-            "urgency"=> $this->urgency,
-            "assigned_name"=>$this->assigned_name,
 
         ];
     }

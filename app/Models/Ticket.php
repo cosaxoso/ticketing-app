@@ -20,7 +20,7 @@ class Ticket extends Model
         'department',
         'assigned_name',
         'status',
-        'image'
+        'attachment'
     ];
 
     public function comment(){
