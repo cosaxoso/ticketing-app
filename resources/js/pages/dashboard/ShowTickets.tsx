@@ -6,7 +6,7 @@ import React, { useState } from "react";
 
 export default function ShowTickets({tickets, comments} ){
 
-    const [commentData, setTicketData] = useState({
+    const [commentData, setCommentData] = useState({
         comment: '',
         ticket_id:'',
         user_id:''
@@ -21,11 +21,18 @@ export default function ShowTickets({tickets, comments} ){
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement >) => {
-        setTicketData({
+        setCommentData({
             ...commentData,
             [e.target.name]: e.target.value,
         });
     };
+
+    const statusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newStatus = e.target.value;
+        router.put(`/tickets/${tickets.id}`, {
+            status: newStatus,
+          });
+    }
 
     return (
         <div style={{ display: "flex", minHeight: "100vh" }}>
@@ -61,9 +68,15 @@ export default function ShowTickets({tickets, comments} ){
                             </div>
                             <div className="grid grid-col">
                                 <label className="font-bold text-lg">Status</label>
-                                <select className="mt-1 rounded-md border">
-                                    <option value={tickets.status}></option>
-                                </select>
+                                <form onChange={statusChange}>
+                                    <select className="py-1 pr-4 pl-1 mt-1 rounded-md border">
+                                        <option>{tickets.status}</option>
+                                        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+                                        <option value={'Pending'}>Pending</option>
+                                        <option value={'In progress'}>In progress</option>
+                                        <option value={'Resolved'}>Resolved</option>
+                                    </select>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -83,7 +96,7 @@ export default function ShowTickets({tickets, comments} ){
                         Comments
                     </h1>
                     {comments.data.map((comment: any) => (
-                        <div class="flex flex-row justify-around m-4">
+                        <div className="flex flex-row justify-around m-4">
                             <p key={comment.id} >{comment.user_id}</p>
                             <p key={comment.id}>{comment.comment}</p>
                             <p key={comment.id}>{comment.created_at}</p>

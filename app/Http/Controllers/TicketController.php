@@ -17,9 +17,6 @@ class TicketController extends Controller{
 
         $sortField=$request->input('sort', 'id');
         $sortDirection = $request->input('direction', 'desc');
-
-
-
         
         if(Auth::guest()){
             return redirect('/login');
@@ -51,5 +48,20 @@ class TicketController extends Controller{
             'tickets' => new TicketResource($ticket),
             'comments' => CommentResource::collection($comments)
         ]);
+    }
+
+    public function update(Request $request, $id){
+        if(Auth::guest()){
+            return redirect('/login');
+        }
+
+        $request->validate([
+            'status' => 'required|string|in:Pending,In progress,Resolved',
+        ]);
+        $ticket = Ticket::findOrFail($id);
+
+        $ticket->status = $request->status;
+        $ticket->save();
+
     }
 }

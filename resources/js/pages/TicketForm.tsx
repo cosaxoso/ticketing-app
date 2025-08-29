@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { router } from "@inertiajs/react";
 import Stepper, {Step} from '@/components/Stepper';
-import { error } from "console";
+import { usePage } from '@inertiajs/react';
 
 
 const ticketForm: React.FC = () => {
+  const { flash } = usePage().props as any;
+
+
   const [formData, setFormData] = useState({
     id: '',
     name: '',
@@ -23,14 +26,45 @@ const ticketForm: React.FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const {name, value} = e.target;
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+
+    if (name == "department"){
+      let newAssginedName = "";
+
+      switch (value){
+        case "Department of Home":
+          newAssginedName = "Yonten"; 
+          break; 
+        case "Department of Health":
+          newAssginedName = "Yonten"; 
+          break; 
+        case "Department of Finance":
+          newAssginedName = "Kunkhen"; 
+          break; 
+        case "Department of Education":
+          newAssginedName = "Mingmar"; 
+          break; 
+        case "Department of Security":
+          newAssginedName = "Mingmar"; 
+          break; 
+        case "Department of Information and International Relations":
+          newAssginedName = "Mingmar"; 
+          break; 
+
+      }
+      setFormData((prev) => ({
+        ...prev,
+        assigned_names: newAssginedName
+      }));
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} method="post">
       <Stepper
         initialStep={1}
         onStepChange={(step) => {
