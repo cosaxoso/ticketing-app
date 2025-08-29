@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\App;
+use App\Models\Ticket;
+use App\Models\User;
+
 return [
 
     /*
@@ -14,7 +18,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
+        'guard' => env('AUTH_GUARD', 'admin'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -36,10 +40,15 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'admin' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'guest' => [
+            'driver' => 'session',
+            'provider' => 'tickets'
+        ]
+        
     ],
 
     /*
@@ -61,9 +70,13 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'driver' => 'database',
+            'table' => 'users'
         ],
+        'tickets' => [
+            'driver' => 'database', 
+            'table' => 'ticket', 
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

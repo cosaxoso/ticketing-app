@@ -23,6 +23,8 @@ class Ticket extends Model
         'attachment'
     ];
 
+    protected $guard = 'guest'; 
+
     public function comment(){
         return $this->hasMany(Comment::class);
     }

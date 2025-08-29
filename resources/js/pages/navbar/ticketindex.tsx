@@ -2,13 +2,12 @@ import SidebarNav from "@/components/SidebarNav";
 import * as React from 'react';
 import Pagination from "@/components/Pagination";
 import { Link, router, usePage } from "@inertiajs/react";
-import {TICKET_STATUS_CLASS_MAP, TICKET_STATUS_TEXT_MAP } from "@/constants";
 
 //view tickets page
-export default function TicketListPage({tickets }){
+export default function ticketindex({tickets }:any){
   const {sort, direction} = usePage().props; 
 
-  const handleSort = (field) => {
+  const handleSort = (field:any) => {
     const newDirection=sort===field&&direction==='asc' ? 'desc' : 'asc'; 
 
     router.get('tickets', {
@@ -51,12 +50,12 @@ export default function TicketListPage({tickets }){
             </thead>
         
             <tbody>
-              {tickets.data.map((ticket)=>
+              {tickets.data.map((ticket:any)=>
                 <tr key={ticket.id} style={{ textAlign: "left" }}>
                   <td style={tdStyle}>{ticket.urgency}</td>
                   <td style={tdStyle}>#{ticket.id}</td>
                   <th style={tdStyle} className="text-white hover:underline">
-                    <Link href={route("ticket.show", ticket.id )}>
+                    <Link href={route("tickets.show", ticket.id )}>
                       {ticket.subject}
                     </Link>
                   </th>

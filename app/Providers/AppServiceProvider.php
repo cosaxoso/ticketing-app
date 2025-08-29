@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Inertia\Inertia;
+use Tightenco\Ziggy;
 
 class AppServiceProvider extends ServiceProvider
 {

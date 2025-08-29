@@ -2,7 +2,7 @@ import React from "react";
 // import SidebarNav from "js/Components/SidebarNav"; 
 import SidebarNav from "@/components/SidebarNav";
 
-const Dashboard: React.FC = () => {
+const dashboard: React.FC = () => {
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
       <SidebarNav />
@@ -16,4 +16,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default dashboard;

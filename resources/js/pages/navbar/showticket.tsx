@@ -4,7 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import React, { useState } from "react";
 
 
-export default function ShowTickets({tickets, comments} ){
+export default function showticket({tickets, comments}: any){
 
     const [commentData, setCommentData] = useState({
         comment: '',
@@ -71,7 +71,7 @@ export default function ShowTickets({tickets, comments} ){
                                 <form onChange={statusChange}>
                                     <select className="py-1 pr-4 pl-1 mt-1 rounded-md border">
                                         <option>{tickets.status}</option>
-                                        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+                                        <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
                                         <option value={'Pending'}>Pending</option>
                                         <option value={'In progress'}>In progress</option>
                                         <option value={'Resolved'}>Resolved</option>

@@ -1,10 +1,13 @@
 import React from "react";
 import { router } from "@inertiajs/react";
 
-const Home: React.FC = () => {
+const home: React.FC = () => {
   const handleMakeRequest = () => {
     router.visit('/ticket-form');
   };
+  const handleViewTicket = () => {
+    router.visit('/ticket-login');
+  }
 
   return (
     <div
@@ -33,6 +36,7 @@ const Home: React.FC = () => {
       </button>
       
       <button
+        onClick={handleViewTicket}
         style={{
           padding: "12px 24px",
           backgroundColor: "#28a745",
@@ -49,4 +53,4 @@ const Home: React.FC = () => {
     </div>
   );
 };
-export default Home;
+export default home;

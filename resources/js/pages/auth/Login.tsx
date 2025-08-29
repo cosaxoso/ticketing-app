@@ -3,7 +3,7 @@ import { router, usePage } from "@inertiajs/react";
 // import { usePage } from "@inertiajs/react";
 
 
-const LoginForm: React.FC = () => {
+const loginForm: React.FC = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -150,4 +150,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default loginForm;

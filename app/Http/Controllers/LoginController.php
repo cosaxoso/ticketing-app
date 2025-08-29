@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
-class AuthenticationController extends Controller{
+class LoginController extends Controller{
     public function login(){
-        return Inertia::render('auth/Login');
+        return Inertia::render('auth/login');
     }
 
     public function authenticate(){
@@ -17,14 +17,13 @@ class AuthenticationController extends Controller{
             'password'=> ['required']
         ]);
 
-        if (!Auth::attempt($attributes)){
-            throw ValidationException::withMessages(['password'=> 'Wrong credentials']);
-        }
-        
-        // regenerate the session token
-        request()-> session()-> regenerate();
+        if (Auth::guard('admin')->attempt($attributes)){
+            request()-> session()-> regenerate();
+            return redirect('/dashboard');
 
-        // return to diff page
-        return redirect('/dashboard');
+        }
+
+        return back()->withErrors(['password' => 'Wrong credentials'])->onlyInput('password');
+        
     }
 }

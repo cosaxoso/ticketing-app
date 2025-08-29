@@ -9,12 +9,12 @@ use Inertia\Inertia;
 use App\Models\Ticket;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Mail;
-class RequestController extends Controller
+class FormController extends Controller
 {
     //get form
     public function show()
     {
-        return Inertia::render('TicketForm');
+        return Inertia::render('ticketform');
     }
 
     //post form

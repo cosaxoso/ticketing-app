@@ -29,7 +29,7 @@ class TicketController extends Controller{
             ->paginate(10)
             ->onEachSide(1);
 
-        return Inertia::render('dashboard/TicketListPage', [
+        return Inertia::render('navbar/ticketindex', [
             'tickets' => TicketResource::collection($tickets),
             'sort' =>$sortField, 
             'direction' => $sortDirection
@@ -44,7 +44,7 @@ class TicketController extends Controller{
 
         $comments = Comment::where('ticket_id', $ticket->id)->get(); 
 
-        return Inertia::render('dashboard/ShowTickets', [
+        return Inertia::render('navbar/showticket', [
             'tickets' => new TicketResource($ticket),
             'comments' => CommentResource::collection($comments)
         ]);
